@@ -6,7 +6,7 @@
 /*   By: ssong <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/28 20:50:36 by ssong             #+#    #+#             */
-/*   Updated: 2018/11/07 09:54:30 by ssong            ###   ########.fr       */
+/*   Updated: 2018/11/08 20:05:19 by ssong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ typedef	struct	s_filler
 	int		col;
 	int		trow;
 	int		tcol;
+	int	centerX;
+	int	centerY;
 }				t_filler;
 
 typedef	struct	s_moves

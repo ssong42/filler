@@ -6,7 +6,7 @@
 /*   By: ssong <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/26 09:25:14 by ssong             #+#    #+#             */
-/*   Updated: 2018/11/07 09:59:19 by ssong            ###   ########.fr       */
+/*   Updated: 2018/11/08 20:04:36 by ssong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,6 +140,28 @@ void	read_token(t_filler *status)
 }
 
 /*
+**  Depending on location of the center of gravity, assign_heatvalue will
+**  assign the corresponding value in respect to that center coordinates.
+**
+**  Equation is this:
+**	Y2 = y coordinate of center of gravity
+**	X2 = x coordinate of ...
+**	Y1 = y coordinate current position being assigned
+**	X1 = x coordinate current position being assigned. 
+**  
+**  	if (abs(Y2 - Y1) > abs(X2 - X1))
+**		value = abs(Y2 - Y1)
+**	else
+**		value = abs(X2 - X1)
+*/
+
+void	assign_heatvalue(int y1, int x1, t_filler *status)
+{
+	
+
+}
+
+/*
 **  Generate a heatmap from the map read and stored in memory
 */
 
@@ -152,10 +174,13 @@ void	generate_heatmap(t_filler *status)
 	while (i < status->row)
 	{
 		status->heatmap[i] = malloc(sizeof(int) * status->col);
-		ft_memset(status->heatmap[i], 0, status->col);
+		//ft_bzeroint(status->heatmap[i], (unsigned int) status->col);
+		for (int x = 0; x < status->row, x++)
+		{
+			assign_heatvalue(t_filler *status);
+		}
 		i++;
 	}
-	print2dintarray(status->heatmap, status->row, status->col);
 }
 
 

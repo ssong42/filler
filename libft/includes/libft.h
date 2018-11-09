@@ -6,7 +6,7 @@
 /*   By: ssong <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/29 16:04:14 by ssong             #+#    #+#             */
-/*   Updated: 2018/11/08 20:20:13 by ssong            ###   ########.fr       */
+/*   Updated: 2018/11/08 20:25:15 by ssong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,5 +139,5 @@ char				**ft_twodchararray(int row, int col);
 
 int				get_next_line(const int fd, char **line);
 void				ft_bzeroint(void *a, size_t n);
-int				ft_abs(int c)
+int				ft_abs(int c);
 #endif
