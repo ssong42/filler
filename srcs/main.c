@@ -6,7 +6,7 @@
 /*   By: ssong <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/28 20:42:56 by ssong             #+#    #+#             */
-/*   Updated: 2018/11/07 08:34:02 by ssong            ###   ########.fr       */
+/*   Updated: 2018/11/09 11:58:31 by ssong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,6 +177,7 @@ int main()
 
 	status = malloc(sizeof(t_filler));
 	set_player(status);
+	set_status(status);
 	while(in_game(status));
 	return (0);
 }
