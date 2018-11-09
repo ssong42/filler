@@ -6,7 +6,7 @@
 /*   By: ssong <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/28 20:42:56 by ssong             #+#    #+#             */
-/*   Updated: 2018/05/01 16:54:37 by ssong            ###   ########.fr       */
+/*   Updated: 2018/11/07 08:34:02 by ssong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,14 @@ t_moves		*find_moves(t_filler *status)
 	}
 	return (moves);
 }
+
+// ingame is where the juiciness occurs.
+// The game is initialized and the algorithm will begin searching for moves
+// There is also logic to check whether there are any more moves left
+// Once the possible moves are discovered the algorithm will have to choose the best one.
+//
+// 1. Discovery for moves.
+// 2. Decide best move.
 
 int				in_game(t_filler *status)
 {

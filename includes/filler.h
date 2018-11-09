@@ -6,7 +6,7 @@
 /*   By: ssong <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/28 20:50:36 by ssong             #+#    #+#             */
-/*   Updated: 2018/04/27 23:38:36 by ssong            ###   ########.fr       */
+/*   Updated: 2018/11/07 09:54:30 by ssong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ typedef	struct	s_filler
 	char	enemy;
 	char	**map;
 	char	**token;
+	int		**heatmap;
 	int		row;
 	int		col;
 	int		trow;
@@ -42,5 +43,6 @@ void	read_map_size(t_filler *status);
 void	set_player(t_filler *status);
 void	initialize_game(t_filler *status);
 int		in_game(t_filler *status);
+void	print2darray(char **map);
 
 #endif

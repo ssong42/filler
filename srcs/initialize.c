@@ -6,7 +6,7 @@
 /*   By: ssong <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/26 09:25:14 by ssong             #+#    #+#             */
-/*   Updated: 2018/05/01 16:52:24 by ssong            ###   ########.fr       */
+/*   Updated: 2018/11/07 09:59:19 by ssong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,25 @@ void	print2darray(char **map)
 	while (map[i] != NULL)
 	{
 		ft_printf("%s\n", map[i]);
+		i++;
+	}
+}
+
+void	print2dintarray(int **map, int r, int c)
+{
+	int i;
+	int j;
+
+	i = 0;
+	while (i < r)
+	{
+		j = 0; 
+		while (j < c)
+		{
+			ft_printf("%d ", map[i][j]);
+			j++;
+		}
+		ft_printf("\n");
 		i++;
 	}
 }
@@ -121,6 +140,26 @@ void	read_token(t_filler *status)
 }
 
 /*
+**  Generate a heatmap from the map read and stored in memory
+*/
+
+void	generate_heatmap(t_filler *status)
+{
+	int i;
+
+	i = 0;
+	status->heatmap = malloc(sizeof(int *) * status->row);
+	while (i < status->row)
+	{
+		status->heatmap[i] = malloc(sizeof(int) * status->col);
+		ft_memset(status->heatmap[i], 0, status->col);
+		i++;
+	}
+	print2dintarray(status->heatmap, status->row, status->col);
+}
+
+
+/*
 **  Main Function that holds all the reading functions
 */
 
@@ -129,4 +168,5 @@ void	initialize_game(t_filler *status)
 	read_map_size(status);
 	read_map(status);
 	read_token(status);
+	generate_heatmap(status);
 }
