@@ -6,7 +6,7 @@
 /*   By: ssong <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/26 09:25:14 by ssong             #+#    #+#             */
-/*   Updated: 2018/11/08 20:04:36 by ssong            ###   ########.fr       */
+/*   Updated: 2018/11/08 21:58:44 by ssong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	print2dintarray(int **map, int r, int c)
 		j = 0; 
 		while (j < c)
 		{
-			ft_printf("%d ", map[i][j]);
+			ft_printf("%-2d ", map[i][j]);
 			j++;
 		}
 		ft_printf("\n");
@@ -139,6 +139,45 @@ void	read_token(t_filler *status)
 	status->token[i] = NULL;
 }
 
+void	find_centerofGravity_X(t_filler *status)
+{
+	int y;
+	int x;
+	int sumY;
+	int sumX;
+
+	sumY = 0;
+	sumX = 0;
+	y = 0;
+	while (y < status->row)
+	{
+		x = 0;
+		while (x < status->col)
+		{
+			if (status->map[y][x] == status->enemy)
+			{
+				sum += y;
+				total++;
+			}
+			x++;
+		}
+		y++;
+	}
+}
+
+void	find_centerofGravity_Y(t_filler *status)
+{
+
+
+}
+
+void	find_centerofGravity(t_filler *status)
+{
+	find_centerofGravity_Y(status);
+	find_centerofGravity_X(status);
+}
+
+
 /*
 **  Depending on location of the center of gravity, assign_heatvalue will
 **  assign the corresponding value in respect to that center coordinates.
@@ -157,30 +196,39 @@ void	read_token(t_filler *status)
 
 void	assign_heatvalue(int y1, int x1, t_filler *status)
 {
-	
-
+	if (ft_abs(10 - y1) > ft_abs(10 - x1))
+		status->heatmap[y1][x1] = ft_abs(10 - y1);
+	else
+		status->heatmap[y1][x1] = ft_abs(10 - x1);
 }
 
 /*
 **  Generate a heatmap from the map read and stored in memory
+**  
+**  Use function for testing:
+**  print2dintarray(status->heatmap, status->row, status->col);
 */
 
 void	generate_heatmap(t_filler *status)
 {
 	int i;
+	int j;
 
 	i = 0;
 	status->heatmap = malloc(sizeof(int *) * status->row);
 	while (i < status->row)
 	{
 		status->heatmap[i] = malloc(sizeof(int) * status->col);
-		//ft_bzeroint(status->heatmap[i], (unsigned int) status->col);
-		for (int x = 0; x < status->row, x++)
+		ft_bzeroint(status->heatmap[i], (unsigned int) status->col);
+		j = 0;
+		while (j < status->col)
 		{
-			assign_heatvalue(t_filler *status);
+			assign_heatvalue(i, j, status);
+			j++;
 		}
 		i++;
 	}
+	//print2dintarray(status->heatmap, status->row, status->col);
 }
 
 
@@ -193,5 +241,6 @@ void	initialize_game(t_filler *status)
 	read_map_size(status);
 	read_map(status);
 	read_token(status);
+	find_centerofGravity(status);
 	generate_heatmap(status);
 }
