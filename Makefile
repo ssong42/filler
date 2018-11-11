@@ -6,7 +6,7 @@
 #    By: ssong <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/03/29 14:40:44 by ssong             #+#    #+#              #
-#    Updated: 2018/04/26 09:39:39 by ssong            ###   ########.fr        #
+#    Updated: 2018/11/09 12:36:00 by ssong            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ LIB = ./libft/libftprintf.a
 LIBINCLUDES = libft/includes/
 PDIR = ./printffunctions/
 FLAGS = -Wall -Werror -Wextra
-FILES = main initialize
+FILES = main initialize heatmap debug
 
 CFILES = $(patsubst %, $(SRCSD)%.c, $(FILES))
 
