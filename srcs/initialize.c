@@ -6,42 +6,12 @@
 /*   By: ssong <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/26 09:25:14 by ssong             #+#    #+#             */
-/*   Updated: 2018/11/09 11:59:48 by ssong            ###   ########.fr       */
+/*   Updated: 2018/11/10 15:23:35 by ssong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
 
-void	print2darray(char **map)
-{
-	int i;
-
-	i = 0;
-	while (map[i] != NULL)
-	{
-		ft_printf("%s\n", map[i]);
-		i++;
-	}
-}
-
-void	print2dintarray(int **map, int r, int c)
-{
-	int i;
-	int j;
-
-	i = 0;
-	while (i < r)
-	{
-		j = 0; 
-		while (j < c)
-		{
-			ft_printf("%-2d ", map[i][j]);
-			j++;
-		}
-		ft_printf("\n");
-		i++;
-	}
-}
 
 /*
 ** The corresponding player number is sent to the corresponding player,
@@ -139,7 +109,6 @@ void	read_token(t_filler *status)
 	status->token[i] = NULL;
 }
 
-
 /*
 **  Main Function that holds all the reading functions
 */
@@ -149,8 +118,6 @@ void	initialize_game(t_filler *status)
 	read_map_size(status);
 	read_map(status);
 	read_token(status);
-	count_total_enemies(status);
 	find_centerofGravity(status);
 	generate_heatmap(status);
-	reset_status(status);
 }

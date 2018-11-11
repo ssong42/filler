@@ -6,7 +6,7 @@
 /*   By: ssong <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/09 11:59:06 by ssong             #+#    #+#             */
-/*   Updated: 2018/11/09 12:00:10 by ssong            ###   ########.fr       */
+/*   Updated: 2018/11/09 16:27:06 by ssong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,9 @@
 **  Taking average of coordinates. Sum of coordinate / total positions
 **  status->totalenemies is counted in a separate function in initialize
 **  game.
+**	Debug
+**	ft_printf("center Y -> %d, center X -> %d\n", status->centerY, status->centerX);
+**	ft_printf("total enemies -> %d\n", status->totalenemies);
 */
 
 void	find_centerofGravity(t_filler *status)
@@ -61,10 +64,10 @@ void	find_centerofGravity(t_filler *status)
 
 void	assign_heatvalue(int y1, int x1, t_filler *status)
 {
-	if (ft_abs(10 - y1) > ft_abs(10 - x1))
-		status->heatmap[y1][x1] = ft_abs(10 - y1);
+	if (ft_abs(status->centerY - y1) > ft_abs(status->centerX - x1))
+		status->heatmap[y1][x1] = ft_abs(status->centerY - y1);
 	else
-		status->heatmap[y1][x1] = ft_abs(10 - x1);
+		status->heatmap[y1][x1] = ft_abs(status->centerX - x1);
 }
 
 /*
@@ -93,5 +96,4 @@ void	generate_heatmap(t_filler *status)
 		}
 		i++;
 	}
-	//print2dintarray(status->heatmap, status->row, status->col);
 }

@@ -6,7 +6,7 @@
 /*   By: ssong <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/28 20:42:56 by ssong             #+#    #+#             */
-/*   Updated: 2018/11/09 11:58:31 by ssong            ###   ########.fr       */
+/*   Updated: 2018/11/10 17:23:26 by ssong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,10 +86,10 @@ bool		valid_field(int x1, int y1, t_filler *status)
 }
 
 /*
-** Create my new move and store it into my linked list
+**	Create my new move and store it into my linked list
 */
 
-t_moves		*store_move(int x, int y, int distance, t_moves *moves)
+t_moves		*store_move(int x, int y, int points, t_moves *moves)
 {
 	t_moves *new;
 	t_moves *cursor;
@@ -98,7 +98,7 @@ t_moves		*store_move(int x, int y, int distance, t_moves *moves)
 	new = malloc(sizeof(t_moves));
 	new->x = x;
 	new->y = y;
-	new->distance = distance;
+	new->points = points;
 	new->next = NULL;
 	if (cursor == NULL)
 		return(new);
@@ -106,6 +106,35 @@ t_moves		*store_move(int x, int y, int distance, t_moves *moves)
 		cursor = cursor->next;	
 	cursor->next = new;
 	return (moves);
+}
+
+/*
+**	Find total points for particular move
+*/
+
+int		find_points(int x1, int y1, t_filler *status)
+{
+	int x2;
+	int y2;
+	int points;
+	
+	points = 0;
+	y2 = 0;
+	while (y2 < status->trow)
+	{
+		x2 = 0;
+		while(x2 < status->tcol)
+		{
+			if (status->token[y2][x2] == '*')
+			{
+				if (status->map[y1 + y2][x1 + x2] == '.')
+					points += status->heatmap[y1 + y2][x1 + x2];
+			}
+			x2++;
+		}
+		y2++;
+	}
+	return (points);
 }
 
 /*
@@ -120,10 +149,10 @@ t_moves		*find_moves(t_filler *status)
 	t_moves *moves;
 	int y;
 	int x;
-	int distance;
+	int points;
 
 	y = 0;
-	distance = 0;
+	points = 0;
 	moves = NULL;
 	while (y + status->trow < status->row + 1)
 	{
@@ -132,8 +161,8 @@ t_moves		*find_moves(t_filler *status)
 		{
 			if(valid_field(x, y, status))
 			{
-				//distance = find_distance(x, y, status);
-				moves = store_move(x, y, distance, moves);
+				points = find_points(x, y, status);
+				moves = store_move(x, y, points, moves);
 			}
 			x++;
 		}
@@ -142,13 +171,45 @@ t_moves		*find_moves(t_filler *status)
 	return (moves);
 }
 
-// ingame is where the juiciness occurs.
-// The game is initialized and the algorithm will begin searching for moves
-// There is also logic to check whether there are any more moves left
-// Once the possible moves are discovered the algorithm will have to choose the best one.
-//
-// 1. Discovery for moves.
-// 2. Decide best move.
+/*
+**	First initialization of variables in t_filler *status.
+*/
+
+void	set_status(t_filler *status)
+{
+	status->centerX = 0;
+	status->centerY = 0;
+	status->totalenemies = 0;
+}
+
+
+/*
+** 	Free or reset particular variables for next turn
+**		free map
+**		free token
+**		free heatmap
+*/
+
+void	reset_status(t_filler *status)
+{
+	
+	ft_free2darray((void **) status->map, status->row);
+	ft_free2darray((void **) status->token, status->trow);
+	ft_free2darray((void **) status->heatmap, status->row);
+	status->centerX = 0;
+	status->centerY = 0;
+	status->totalenemies = 0;
+}
+
+/*
+** ingame is where the juiciness occurs.
+** The game is initialized and the algorithm will begin searching for moves
+** There is also logic to check whether there are any more moves left
+** Once the possible moves are discovered the algorithm will have to choose the best one.
+**
+**	1. Discovery for moves.
+**	2. Decide best move.
+*/
 
 int				in_game(t_filler *status)
 {
@@ -163,11 +224,18 @@ int				in_game(t_filler *status)
 		ft_printf("%s\n", "no moves");
 		return (0);
 	}
+	find_lowest(cursor);
+	print_lowest(cursor);
+	//print2dintarray(status->heatmap, status->row, status->col);
+	/*
 	while (cursor != NULL)
 	{
-		printf("%d, %d\n", cursor->y, cursor->x);
+		printf("%d, %d   points -> %d\n", cursor->y, cursor->x, cursor->points);
 		cursor = cursor->next;
 	}
+	*/
+	reset_status(status);
+	free_moves(status);
 	return (0);
 }
 
