@@ -6,12 +6,52 @@
 /*   By: ssong <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/26 09:25:14 by ssong             #+#    #+#             */
-/*   Updated: 2018/11/10 15:23:35 by ssong            ###   ########.fr       */
+/*   Updated: 2018/11/10 23:14:44 by ssong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
 
+int	get_next_filler(int fd, char **line)
+{
+	char	buffer[2];
+	char 	*temp;
+	int	br;
+
+	temp = malloc(1);
+	temp = 0;
+	if (fd < 0 || read(fd, buffer, 0) < 0)
+		return (-1);
+	while((br = read(fd, buffer, 1)) && buffer[0] != '\n')
+	{
+		buffer[br] = 0;
+		temp = ft_strjoinfreee(temp, buffer);
+	}
+	*line = temp;
+	if (br == 0)
+		return (0);
+	return (1);
+}
+
+/*
+** For precausionary measure, I need to check if there are second player. If there ** is it can mess up the spacing when I read in the other variables.
+*/
+
+int	check_second_player()
+{
+	char	buffer[2];
+	char	*line;
+
+	if (read(STDIN_FILENO, buffer, 0) < 0)
+		return (-1);
+	read(STDIN_FILENO, buffer, 1);
+	if (buffer[0] == '$')
+	{
+		get_next_filler(STDIN_FILENO, &line);
+		free (line);
+	}
+	return (1);
+}
 
 /*
 ** The corresponding player number is sent to the corresponding player,
@@ -24,10 +64,19 @@ void	set_player(t_filler *status)
 	char *line;
 
 	line = 0;
-	if(!get_next_line(STDIN_FILENO, &line))
+	if(!get_next_filler(STDIN_FILENO, &line))
 		exit(0);
-	status->me = (line[10] == '1' ? 'O' : 'X');
-	status->enemy = (line[10] == '1' ? 'X' :'O');
+	if (!ft_strcmp(line + 17, "ssong.filler]"))
+	{
+		status->me = 'O';
+		status->enemy = 'X';
+	}
+	else
+	{
+		status->me = 'X';
+		status->enemy = 'O';
+	}
+	check_second_player();
 	free(line);
 }
 
@@ -45,7 +94,7 @@ void	read_map_size(t_filler *status)
 
 	line = 0;
 	place = line;
-	if(!get_next_line(STDIN_FILENO, &line))
+	if(!get_next_filler(STDIN_FILENO, &line))
 		exit(0);
 	line = ft_strchr(line, ' ');
 	status->row = ft_atoi(line);
@@ -69,12 +118,14 @@ void	read_map(t_filler *status)
 
 	line = 0;
 	i = 0;
-	get_next_line(STDIN_FILENO, &line);
+	if(!get_next_filler(STDIN_FILENO, &line))
+		exit(0);
 	free(line);
 	status->map = malloc(sizeof(char *) * status->row + 1);
 	while (i < status->row)
 	{
-		get_next_line(STDIN_FILENO, &line);
+		if (!get_next_filler(STDIN_FILENO, &line))
+			exit(0);
 		status->map[i] = ft_strdup(line + 4);
 		free(line);
 		i++;
@@ -94,14 +145,16 @@ void	read_token(t_filler *status)
 
 	i = 0;
 	line = 0;
-	get_next_line(STDIN_FILENO, &line);
+	if(!get_next_filler(STDIN_FILENO, &line))
+		exit(0);
 	status->trow = ft_atoi(line + 6);
 	status->tcol = ft_atoi(strchr(line + 7, ' '));
 	free(line);
 	status->token = malloc(sizeof(char *) * status->trow + 1);
 	while (i < status->trow)
 	{
-		get_next_line(STDIN_FILENO, &line);
+		if(!get_next_filler(STDIN_FILENO, &line))
+			exit(0);
 		status->token[i] = ft_strdup(line);
 		free(line);
 		i++;

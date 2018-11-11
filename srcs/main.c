@@ -6,7 +6,7 @@
 /*   By: ssong <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/28 20:42:56 by ssong             #+#    #+#             */
-/*   Updated: 2018/11/10 19:37:10 by ssong            ###   ########.fr       */
+/*   Updated: 2018/11/10 21:51:53 by ssong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -227,9 +227,26 @@ t_moves	*find_lowest(t_moves *moves)
 
 void	print_move(t_moves *moves)
 {
-	ft_printf("%d %d\n", moves->x, moves->y);	
+	ft_printf("%d %d\n", moves->y, moves->x);	
 }
 
+/*
+**	Free moves linked list
+*/
+
+void	free_moves(t_moves *moves)
+{
+	t_moves *cursor;
+	t_moves *next;
+
+	cursor = moves;
+	while (cursor != NULL)
+	{
+		next = cursor->next;
+		ft_memdel((void **)&cursor);
+		cursor = next;
+	}
+}
 /*
 ** ingame is where the juiciness occurs.
 ** The game is initialized and the algorithm will begin searching for moves
@@ -253,7 +270,7 @@ int				in_game(t_filler *status)
 	}
 	print_move(find_lowest(moves));
 	reset_status(status);
-	//free_moves(moves);
+	free_moves(moves);
 	return (0);
 }
 
