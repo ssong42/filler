@@ -6,7 +6,7 @@
 /*   By: ssong <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/28 20:42:56 by ssong             #+#    #+#             */
-/*   Updated: 2018/11/10 17:23:26 by ssong            ###   ########.fr       */
+/*   Updated: 2018/11/10 19:37:10 by ssong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,6 +202,35 @@ void	reset_status(t_filler *status)
 }
 
 /*
+**	Find lowest points out of all moves
+*/
+
+t_moves	*find_lowest(t_moves *moves)
+{
+	t_moves *cursor;
+	t_moves *min;
+
+	cursor = moves;
+	min = moves;
+	while (cursor != 0)
+	{
+		if (cursor->points < min->points)
+			min = cursor;
+		cursor = cursor->next;	
+	}
+	return (min);
+}
+
+/*
+**	Print the coordinates of the move
+*/
+
+void	print_move(t_moves *moves)
+{
+	ft_printf("%d %d\n", moves->x, moves->y);	
+}
+
+/*
 ** ingame is where the juiciness occurs.
 ** The game is initialized and the algorithm will begin searching for moves
 ** There is also logic to check whether there are any more moves left
@@ -214,28 +243,17 @@ void	reset_status(t_filler *status)
 int				in_game(t_filler *status)
 {
 	t_moves *moves;
-	t_moves *cursor;
 
 	initialize_game(status);
 	moves = find_moves(status);
-	cursor = moves;
 	if (!moves)
 	{
 		ft_printf("%s\n", "no moves");
 		return (0);
 	}
-	find_lowest(cursor);
-	print_lowest(cursor);
-	//print2dintarray(status->heatmap, status->row, status->col);
-	/*
-	while (cursor != NULL)
-	{
-		printf("%d, %d   points -> %d\n", cursor->y, cursor->x, cursor->points);
-		cursor = cursor->next;
-	}
-	*/
+	print_move(find_lowest(moves));
 	reset_status(status);
-	free_moves(status);
+	//free_moves(moves);
 	return (0);
 }
 
