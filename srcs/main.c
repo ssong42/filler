@@ -6,7 +6,7 @@
 /*   By: ssong <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/28 20:42:56 by ssong             #+#    #+#             */
-/*   Updated: 2018/11/10 21:51:53 by ssong            ###   ########.fr       */
+/*   Updated: 2018/11/12 11:39:55 by ssong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,28 +61,28 @@ bool		valid_field(int x1, int y1, t_filler *status)
 	int x2;
 	int y2;
 	int matches;
-	
+	char loc;
+
 	matches = 0;
-	y2 = 0;
-	while (y2 < status->trow)
+	y2 = -1;
+	while (++y2 < status->trow)
 	{
-		x2 = 0;
-		while(x2 < status->tcol)
+		x2 = -1;
+		while(++x2 < status->tcol)
 		{
 			if (status->token[y2][x2] == '*')
 			{
-				if (status->map[y1 + y2][x1 + x2] == status->me)
+				loc = status->map[y1 + y2][x1 + x2];
+				if (loc == status->me || loc == status->me + 32)
 					matches++;
-				else if (status->map[y1 + y2][x1 + x2] == status->enemy)
+				if (matches > 1 || loc == status->enemy || loc ==  status->enemy + 32)
 					return (0);
 			}
-			x2++;
 		}
-		y2++;
 	}
-	if (matches == 1)
-		return (1);
-	return (0);
+	if (matches == 0)
+		return (0);
+	return (1);
 }
 
 /*
@@ -271,7 +271,7 @@ int				in_game(t_filler *status)
 	print_move(find_lowest(moves));
 	reset_status(status);
 	free_moves(moves);
-	return (0);
+	return (1);
 }
 
 int main()

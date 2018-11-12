@@ -6,7 +6,7 @@
 /*   By: ssong <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/09 11:59:06 by ssong             #+#    #+#             */
-/*   Updated: 2018/11/09 16:27:06 by ssong            ###   ########.fr       */
+/*   Updated: 2018/11/12 12:52:34 by ssong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	find_centerofGravity(t_filler *status)
 		x = 0;
 		while (x < status->col)
 		{
-			if (status->map[y][x] == status->enemy)
+			if (status->map[y][x] == status->enemy || status->map[y][x] == status->enemy + 32)
 			{
 				status->centerY += y;
 				status->centerX += x;

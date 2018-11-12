@@ -6,7 +6,7 @@
 #    By: ssong <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/03/29 14:40:44 by ssong             #+#    #+#              #
-#    Updated: 2018/11/09 12:36:00 by ssong            ###   ########.fr        #
+#    Updated: 2018/11/12 11:49:54 by ssong            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,8 +37,14 @@ $(NAME):
 play:
 	./resources/filler_vm -p1 ./$(NAME) -f ./resources/maps/map00
 
-versus:
+versus1:
 	./resources/filler_vm -p1 ./$(NAME) -p2 $(RESRCS)hcao.filler  -v -f ./resources/maps/map00
+
+versus2:
+	./resources/filler_vm -p1 ./$(NAME) -p2 $(RESRCS)hcao.filler  -v -f ./resources/maps/map01
+
+versus3:
+	./resources/filler_vm -p1 ./$(NAME) -p2 $(RESRCS)hcao.filler  -v -f ./resources/maps/map02
 
 comp:
 	./resources/filler_vm -p1 $(RESRCS)grati.filler -p2 $(RESRCS)hcao.filler -v -f ./resources/maps/map00
