@@ -6,7 +6,7 @@
 /*   By: ssong <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/28 20:42:56 by ssong             #+#    #+#             */
-/*   Updated: 2018/11/12 11:39:55 by ssong            ###   ########.fr       */
+/*   Updated: 2018/11/13 14:04:45 by ssong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,9 +177,10 @@ t_moves		*find_moves(t_filler *status)
 
 void	set_status(t_filler *status)
 {
-	status->centerX = 0;
-	status->centerY = 0;
+	status->x2 = 0;
+	status->y2 = 0;
 	status->totalenemies = 0;
+	status->stage = 0;
 }
 
 
@@ -196,9 +197,10 @@ void	reset_status(t_filler *status)
 	ft_free2darray((void **) status->map, status->row);
 	ft_free2darray((void **) status->token, status->trow);
 	ft_free2darray((void **) status->heatmap, status->row);
-	status->centerX = 0;
-	status->centerY = 0;
+	status->x2 = 0;
+	status->y2 = 0;
 	status->totalenemies = 0;
+	status->stage = 1;
 }
 
 /*

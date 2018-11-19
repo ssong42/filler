@@ -6,7 +6,7 @@
 /*   By: ssong <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/26 09:25:14 by ssong             #+#    #+#             */
-/*   Updated: 2018/11/12 11:40:58 by ssong            ###   ########.fr       */
+/*   Updated: 2018/11/13 14:06:00 by ssong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,6 +171,6 @@ void	initialize_game(t_filler *status)
 	read_map_size(status);
 	read_map(status);
 	read_token(status);
-	find_centerofGravity(status);
+//	find_centerofGravity(status);
 	generate_heatmap(status);
 }

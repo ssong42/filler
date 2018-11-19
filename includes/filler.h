@@ -6,7 +6,7 @@
 /*   By: ssong <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/28 20:50:36 by ssong             #+#    #+#             */
-/*   Updated: 2018/11/10 17:07:36 by ssong            ###   ########.fr       */
+/*   Updated: 2018/11/13 14:05:34 by ssong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,10 @@ typedef	struct	s_filler
 	int		col;
 	int		trow;
 	int		tcol;
-	int	centerX;
-	int	centerY;
+	int	x2;
+	int	y2;
 	int	totalenemies;
+	int	stage;
 }				t_filler;
 
 typedef	struct	s_moves
@@ -61,7 +62,7 @@ int		in_game(t_filler *status);
 **	heatmap.c
 */
 
-void	find_centerofGravity(t_filler *status);
+//void	find_centerofGravity(t_filler *status);
 void	assign_heatvalue(int y1, int x1, t_filler *status);
 void	generate_heatmap(t_filler *status);
 
