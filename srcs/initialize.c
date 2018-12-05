@@ -6,7 +6,7 @@
 /*   By: ssong <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/26 09:25:14 by ssong             #+#    #+#             */
-/*   Updated: 2018/11/13 14:06:00 by ssong            ###   ########.fr       */
+/*   Updated: 2018/12/05 12:39:54 by ssong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ int	get_next_filler(int fd, char **line)
 }
 
 /*
-** For precausionary measure, I need to check if there are second player. If there ** is it can mess up the spacing when I read in the other variables.
+** For precausionary measure, I need to check if there are second player. If there 
+** is it can mess up the spacing when I read in the other variables.
 */
 
 int	check_second_player()
@@ -163,6 +164,127 @@ void	read_token(t_filler *status)
 }
 
 /*
+**	if status->init is equal to zero or not initialized
+**	we need to find our piece dawg.
+*/
+
+void	find_origin(t_filler *status)
+{
+	if (status->init == 0)
+	{
+		int y1;
+		int x1;
+
+		y1 = 0;
+		while (y1 < status->row)
+		{
+			x1 = 0;
+			while (x1 < status->col)
+			{
+				if (status->map[y1][x1] == status->me) 
+				{
+					status->initx = x1;
+					status->inity = y1;
+				}
+				x1++;
+			}
+			y1++;
+		}
+		status->init = 1;
+	}
+}
+
+/*
+**  Depending on the status check if the mission is complete.
+**  If stage = 0, then I need to find the initial point and find the y and x directly
+**	across.
+** 	Depending on stage define the COG location 
+*/
+
+/*
+void	check_stage(status)
+{
+	//see if I have a piece touching left wall.
+	//	if so then I need to set status to 1.
+	//see if I have a piece touching right wall.
+	//	if so then I need to set status to 2.
+	//see if I have met both conditions now go towards enemy.
+}
+*/
+
+int	leftwall_touching(t_filler *status)
+{
+	int y1;
+
+	y1 = 0;
+	while (y1 < status->row)
+	{
+		if (status->map[y1][0] == status->me || status->map[y1][0] == status->me + 32) 
+			return (1);
+		y1++;
+	}
+	return (0);
+}
+
+int	rightwall_touching(t_filler *status)
+{
+	int y1;
+
+	y1 = 0;
+	while (y1 < status->row)
+	{
+		if (status->map[y1][status->col - 1] == status->me || status->map[y1][status->col - 1] == status->me + 32) 
+			return (1);
+		y1++;
+	}
+	return (0);
+}
+
+/*
+**	if stage 0 check if the thing is hitting left
+**	if stage 1 check if the thing is hitting top right
+**	if stage 2 then booyeah
+*/
+
+void	set_stage(t_filler *status)
+{
+	if (status->stage == 0)
+	{
+		if (leftwall_touching(status))
+			status->stage++;
+	}
+	else if (status->stage == 1)
+	{
+		if (rightwall_touching(status))
+			status->stage++;
+	}
+}
+
+/*
+**	Set Destination. sets destination. Depending on the stage it will provide
+**	x and y coordinates for the alogrith to try to go to.
+*/
+
+void	set_destination(t_filler *status)
+{
+	if (status->stage == 0)
+	{
+		status->x2 = 0;
+		status->y2 = status->inity;
+	}
+	else if (status->stage == 1)
+	{
+		status->x2 = status->col - 1;
+		status->y2 = status->row / 3;
+	}
+	else if (status->stage == 2)
+	{
+		find_centerofGravity(status);
+
+	}
+}
+
+/*
 **  Main Function that holds all the reading functions
 */
 
@@ -171,6 +293,8 @@ void	initialize_game(t_filler *status)
 	read_map_size(status);
 	read_map(status);
 	read_token(status);
-//	find_centerofGravity(status);
+	find_origin(status);
+	set_stage(status);
+	set_destination(status);
 	generate_heatmap(status);
 }

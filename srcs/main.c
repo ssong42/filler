@@ -6,7 +6,7 @@
 /*   By: ssong <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/28 20:42:56 by ssong             #+#    #+#             */
-/*   Updated: 2018/11/13 14:04:45 by ssong            ###   ########.fr       */
+/*   Updated: 2018/12/05 12:06:16 by ssong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,6 +181,9 @@ void	set_status(t_filler *status)
 	status->y2 = 0;
 	status->totalenemies = 0;
 	status->stage = 0;
+	status->init = 0;
+	status->initx = 0;
+	status->inity = 0;
 }
 
 
@@ -200,7 +203,6 @@ void	reset_status(t_filler *status)
 	status->x2 = 0;
 	status->y2 = 0;
 	status->totalenemies = 0;
-	status->stage = 1;
 }
 
 /*
