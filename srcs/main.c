@@ -6,7 +6,7 @@
 /*   By: ssong <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/28 20:42:56 by ssong             #+#    #+#             */
-/*   Updated: 2018/12/05 12:06:16 by ssong            ###   ########.fr       */
+/*   Updated: 2018/12/07 13:20:03 by ssong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,49 @@
 **	If I do not have exactly one match of my token and map then the piece is invalid.
 */
 
+typedef struct s_temp
+{
+	int x2;
+	int y2;
+	int matches;
+	char loc;
+
+}	t_temp;
+
 bool		valid_field(int x1, int y1, t_filler *status)
+{
+	t_temp temp;
+
+	temp.matches = 0;
+	temp.y2 = -1;
+	while (++temp.y2 < status->trow)
+	{
+		temp.x2 = -1;
+		while(++temp.x2 < status->tcol)
+		{
+			if (status->token[temp.y2][temp.x2] == '*')
+			{
+				if (y1 + temp.y2 < 0 || y1 + temp.y2 >= status->row ||
+				x1 + temp.x2 < 0 || x1 + temp.x2 >= status->col)
+					return (0);
+				temp.loc = status->map[y1 + temp.y2][x1 + temp.x2];
+				if (temp.loc == status->me || temp.loc == status->me + 32)
+					temp.matches++;
+				if (temp.loc == status->enemy || temp.loc ==  status->enemy + 32)
+					return (0);
+			}
+		}
+	}
+	return ((temp.matches == 1) ? 1 : 0);
+}
+
+/*
+**		check if the y and x position is equal to a '*' if it is then, 
+**	
+**
+*/
+
+bool	valid_field1(int x1, int y1, t_filler *status)
 {
 	int x2;
 	int y2;
@@ -151,13 +193,13 @@ t_moves		*find_moves(t_filler *status)
 	int x;
 	int points;
 
-	y = 0;
+	y = (status->trow - 1) * -1;
 	points = 0;
 	moves = NULL;
-	while (y + status->trow < status->row + 1)
+	while (y < status->row)
 	{
-		x = 0;
-		while (x + status->tcol < status->col + 1)
+		x = (status->tcol - 1) * -1;
+		while (x < status->col)
 		{
 			if(valid_field(x, y, status))
 			{
@@ -184,6 +226,8 @@ void	set_status(t_filler *status)
 	status->init = 0;
 	status->initx = 0;
 	status->inity = 0;
+	status->initEx = 0;
+	status->initEy = 0;
 }
 
 
@@ -251,6 +295,7 @@ void	free_moves(t_moves *moves)
 		cursor = next;
 	}
 }
+
 /*
 ** ingame is where the juiciness occurs.
 ** The game is initialized and the algorithm will begin searching for moves
@@ -283,8 +328,8 @@ int main()
 	t_filler *status;
 
 	status = malloc(sizeof(t_filler));
-	set_player(status);
 	set_status(status);
+	set_player(status);
 	while(in_game(status));
 	return (0);
 }

@@ -6,11 +6,12 @@
 /*   By: ssong <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/09 11:59:06 by ssong             #+#    #+#             */
-/*   Updated: 2018/12/05 12:34:19 by ssong            ###   ########.fr       */
+/*   Updated: 2018/12/06 21:36:07 by ssong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
+
 
 /*
 **  Taking average of coordinates. Sum of coordinate / total positions

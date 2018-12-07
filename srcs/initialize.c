@@ -6,7 +6,7 @@
 /*   By: ssong <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/26 09:25:14 by ssong             #+#    #+#             */
-/*   Updated: 2018/12/05 12:39:54 by ssong            ###   ########.fr       */
+/*   Updated: 2018/12/07 13:18:39 by ssong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,20 +175,23 @@ void	find_origin(t_filler *status)
 		int y1;
 		int x1;
 
-		y1 = 0;
-		while (y1 < status->row)
+		y1 = -1;
+		while (++y1 < status->row)
 		{
-			x1 = 0;
-			while (x1 < status->col)
+			x1 = -1;
+			while (++x1 < status->col)
 			{
 				if (status->map[y1][x1] == status->me) 
 				{
 					status->initx = x1;
 					status->inity = y1;
 				}
-				x1++;
+				else if (status->map[y1][x1] == status->enemy) 
+				{
+					status->initEx = x1;
+					status->initEy = y1;
+				}
 			}
-			y1++;
 		}
 		status->init = 1;
 	}
@@ -241,6 +244,40 @@ int	rightwall_touching(t_filler *status)
 }
 
 /*
+**	Assign to corner from a specific point on a map.
+*/
+
+void	AssignCorner(t_filler *status)
+{
+	if (status->stage == 2)
+	{
+		status->y2 = status->row - 1;
+		status->x2 = 0;
+	}
+	else if (status->stage == 3)
+	{
+		status->y2 = status->row - 1;
+		status->x2 = status->col - 1;
+	}
+	else if (status->stage == 4)
+	{
+		status->y2 = status->row / 2;
+		status->x2 = status->col / 2;
+	}
+	else if (status->stage == 5)
+	{
+		status->y2 = 0;
+		status->x2 = 0;
+	}
+	else
+	{
+		status->stage = 1;
+		find_centerofGravity(status);
+	}
+	status->stage++;
+}
+
+/*
 **	if stage 0 check if the thing is hitting left
 **	if stage 1 check if the thing is hitting top right
 **	if stage 2 then booyeah
@@ -277,10 +314,9 @@ void	set_destination(t_filler *status)
 		status->x2 = status->col - 1;
 		status->y2 = status->row / 3;
 	}
-	else if (status->stage == 2)
+	else if (status->stage >= 2)
 	{
-		find_centerofGravity(status);
-
+		AssignCorner(status);
 	}
 }
 
