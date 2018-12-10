@@ -6,7 +6,7 @@
 /*   By: ssong <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/28 20:50:36 by ssong             #+#    #+#             */
-/*   Updated: 2018/12/04 15:48:08 by ssong            ###   ########.fr       */
+/*   Updated: 2018/12/06 21:33:20 by ssong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ typedef	struct	s_filler
 	int		col;
 	int		trow;
 	int		tcol;
+	int		totaltoken;
 	int	x2;
 	int	y2;
 	int	totalenemies;
@@ -36,6 +37,8 @@ typedef	struct	s_filler
 	int	init;
 	int	initx;
 	int	inity;
+	int	initEx;
+	int	initEy;
 }				t_filler;
 
 typedef	struct	s_moves

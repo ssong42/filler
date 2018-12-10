@@ -1,4 +1,4 @@
-$$$ exec p1 : [./ssong.filler]
+$$$ exec p2 : [./ssong.filler]
 Plateau 15 17:
     01234567890123456
 000 .................

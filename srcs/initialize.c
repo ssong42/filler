@@ -6,7 +6,7 @@
 /*   By: ssong <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/26 09:25:14 by ssong             #+#    #+#             */
-/*   Updated: 2018/12/07 13:18:39 by ssong            ###   ########.fr       */
+/*   Updated: 2018/12/10 14:54:58 by ssong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	set_player(t_filler *status)
 	line = 0;
 	if(!get_next_filler(STDIN_FILENO, &line))
 		exit(0);
-	if (!ft_strcmp(line + 17, "ssong.filler]"))
+	if (!ft_strcmp(line + 11, "1"))
 	{
 		status->me = 'O';
 		status->enemy = 'X';
@@ -77,7 +77,6 @@ void	set_player(t_filler *status)
 		status->me = 'X';
 		status->enemy = 'O';
 	}
-	check_second_player();
 	free(line);
 }
 
@@ -243,6 +242,20 @@ int	rightwall_touching(t_filler *status)
 	return (0);
 }
 
+int	topwall_touching(t_filler *status)
+{
+	int x1;
+
+	x1 = 0;
+	while (x1 < status->col)
+	{
+		if (status->map[0][x1] == status->me || status->map[0][x1] == status->me + 32) 
+			return (1);
+		x1++;
+	}
+	return (0);
+}
+
 /*
 **	Assign to corner from a specific point on a map.
 */
@@ -318,10 +331,44 @@ void	set_destination(t_filler *status)
 	{
 		AssignCorner(status);
 	}
+	//sleep(1);
 }
 
+void	set_stage2(t_filler *status)
+{
+	if (status->stage == 0)
+	{
+		if (topwall_touching(status))
+			status->stage++;
+	}
+	else if (status->stage == 1)
+	{
+		if (rightwall_touching(status))
+			status->stage++;
+	}
+}
+
+void	set_destination2(t_filler *status)
+{
+	if (status->stage == 0)
+	{
+		status->x2 = status->col;
+		status->y2 = 0;
+	}
+	else if (status->stage == 1)
+	{
+		status->x2 = 0;
+		status->y2 = 0;
+	}
+	else if (status->stage >= 2)
+	{
+		AssignCorner(status);
+	}
+	//sleep(1);
+}
 /*
-**  Main Function that holds all the reading functions
+**  Main Function that holds all the reading functions and decides destination based on 
+** 	the stage of the game and what player number I am.
 */
 
 void	initialize_game(t_filler *status)
@@ -330,7 +377,15 @@ void	initialize_game(t_filler *status)
 	read_map(status);
 	read_token(status);
 	find_origin(status);
-	set_stage(status);
-	set_destination(status);
+	if (status->me == 'O')
+	{
+		set_stage(status);
+		set_destination(status);
+	}
+	else
+	{
+		set_stage2(status);
+		set_destination2(status);
+	}
 	generate_heatmap(status);
 }

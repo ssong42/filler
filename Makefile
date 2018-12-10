@@ -6,7 +6,7 @@
 #    By: ssong <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/03/29 14:40:44 by ssong             #+#    #+#              #
-#    Updated: 2018/11/19 15:30:22 by ssong            ###   ########.fr        #
+#    Updated: 2018/12/07 13:05:37 by ssong            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,14 +38,22 @@ play:
 	./resources/filler_vm -p1 ./$(NAME) -f ./resources/maps/map00
 
 versus1:
-	./resources/filler_vm -p1 ./$(NAME) -p2 $(RESRCS)hcao.filler  -v -f ./resources/maps/map00
+	./resources/filler_vm -p1 ./$(NAME) -p2 $(player)  -v -f ./resources/maps/map00
 
 versus2:
-	./resources/filler_vm -p1 ./$(NAME) -p2 $(RESRCS)hcao.filler  -v -f ./resources/maps/map01
+	./resources/filler_vm -p1 ./$(NAME) -p2 $(player)  -v -f ./resources/maps/map01
 
 versus3:
-	./resources/filler_vm -p1 ./$(NAME) -p2 $(RESRCS)hcao.filler  -v -f ./resources/maps/map02
+	./resources/filler_vm -p1 ./$(NAME) -p2 $(player)  -v -f ./resources/maps/map02
 
+rversus1:
+	./resources/filler_vm -p2 ./$(NAME) -p1 $(player)  -v -f ./resources/maps/map00
+
+rversus2:
+	./resources/filler_vm -p2 ./$(NAME) -p1 $(player)  -v -f ./resources/maps/map01
+
+rversus3:
+	./resources/filler_vm -p2 ./$(NAME) -p1 $(player)  -v -f ./resources/maps/map02
 comp:
 	./resources/filler_vm -p1 $(RESRCS)grati.filler -p2 $(RESRCS)hcao.filler -v -f ./resources/maps/map00
 
