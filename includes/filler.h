@@ -6,7 +6,7 @@
 /*   By: ssong <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/28 20:50:36 by ssong             #+#    #+#             */
-/*   Updated: 2018/12/06 21:33:20 by ssong            ###   ########.fr       */
+/*   Updated: 2018/12/11 13:30:38 by ssong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,4 +79,8 @@ void	generate_heatmap(t_filler *status);
 void	print2darray(char **map);
 void	print2dintarray(int **map, int r, int c);
 
+/*
+**	Uncategorized
+*/
+void	AssignCorner2(t_filler *status);
 #endif

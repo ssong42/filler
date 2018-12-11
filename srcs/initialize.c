@@ -6,7 +6,7 @@
 /*   By: ssong <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/26 09:25:14 by ssong             #+#    #+#             */
-/*   Updated: 2018/12/10 14:54:58 by ssong            ###   ########.fr       */
+/*   Updated: 2018/12/11 13:29:16 by ssong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -256,6 +256,20 @@ int	topwall_touching(t_filler *status)
 	return (0);
 }
 
+int	bottomwall_touching(t_filler *status)
+{
+	int x1;
+
+	x1 = 0;
+	while (x1 < status->col)
+	{
+		if (status->map[status->row - 1][x1] == status->me || status->map[status->row - 1][x1] == status->me + 32) 
+			return (1);
+		x1++;
+	}
+	return (0);
+}
+
 /*
 **	Assign to corner from a specific point on a map.
 */
@@ -277,17 +291,27 @@ void	AssignCorner(t_filler *status)
 		status->y2 = status->row / 2;
 		status->x2 = status->col / 2;
 	}
-	else if (status->stage == 5)
+	AssignCorner2(status);
+	status->stage++;
+}
+
+void	AssignCorner2(t_filler *status)
+{
+	if (status->stage == 5)
 	{
 		status->y2 = 0;
 		status->x2 = 0;
+	}
+	else if (status->stage == 6)
+	{
+		status->y2 = 0;
+		status->x2 = status->col - 1;
 	}
 	else
 	{
 		status->stage = 1;
 		find_centerofGravity(status);
 	}
-	status->stage++;
 }
 
 /*
@@ -325,13 +349,12 @@ void	set_destination(t_filler *status)
 	else if (status->stage == 1)
 	{
 		status->x2 = status->col - 1;
-		status->y2 = status->row / 3;
+		status->y2 = 0;
 	}
 	else if (status->stage >= 2)
 	{
 		AssignCorner(status);
 	}
-	//sleep(1);
 }
 
 void	set_stage2(t_filler *status)
@@ -343,7 +366,7 @@ void	set_stage2(t_filler *status)
 	}
 	else if (status->stage == 1)
 	{
-		if (rightwall_touching(status))
+		if (bottomwall_touching(status))
 			status->stage++;
 	}
 }
@@ -352,19 +375,18 @@ void	set_destination2(t_filler *status)
 {
 	if (status->stage == 0)
 	{
-		status->x2 = status->col;
+		status->x2 = status->col/2;
 		status->y2 = 0;
 	}
 	else if (status->stage == 1)
 	{
-		status->x2 = 0;
-		status->y2 = 0;
+		status->x2 = status->col/2;
+		status->y2 = status->row;
 	}
 	else if (status->stage >= 2)
 	{
 		AssignCorner(status);
 	}
-	//sleep(1);
 }
 /*
 **  Main Function that holds all the reading functions and decides destination based on 
