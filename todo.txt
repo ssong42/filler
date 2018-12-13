@@ -1,2 +1,0 @@
-Create an Algorith that will calculate the moves distance from destination.
-It needs to know what destination it wants.
