@@ -187,8 +187,8 @@ void	find_origin(t_filler *status)
 				}
 				else if (status->map[y1][x1] == status->enemy) 
 				{
-					status->initEx = x1;
-					status->initEy = y1;
+					status->initex = x1;
+					status->initey = y1;
 				}
 			}
 		}

@@ -226,8 +226,8 @@ void	set_status(t_filler *status)
 	status->init = 0;
 	status->initx = 0;
 	status->inity = 0;
-	status->initEx = 0;
-	status->initEy = 0;
+	status->initex = 0;
+	status->initey = 0;
 }
 
 
