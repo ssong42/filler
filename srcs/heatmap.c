@@ -22,7 +22,7 @@
 **	ft_printf("total enemies -> %d\n", status->totalenemies);
 */
 
-void	find_centerofGravity(t_filler *status)
+void	find_centerofgravity(t_filler *status)
 {
 	int y;
 	int x;

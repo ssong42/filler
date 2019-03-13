@@ -80,7 +80,37 @@ void			print2darray(char **map);
 void			print2dintarray(int **map, int r, int c);
 
 /*
-**	Uncategorized
+**	logic.c
 */
+
+void			assigncorner(t_filler *status);
 void			assigncorner2(t_filler *status);
+void			set_destination(t_filler *status);
+void			set_stage2(t_filler *status);
+void			set_destination2(t_filler *status);
+
+/*
+**	logic2.c
+*/
+
+void			find_origin(t_filler *status);
+void			set_stage(t_filler *status);
+void			set_player(t_filler *status);
+
+
+/*
+**	checkwall.c
+*/
+
+int				leftwall_touching(t_filler *status);
+int				rightwall_touching(t_filler *status);
+int				topwall_touching(t_filler *status);
+int				bottomwall_touching(t_filler *status);
+
+/*
+**	helper.c
+*/
+
+int				get_next_filler(int fd, char **line);
+
 #endif
