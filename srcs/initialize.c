@@ -63,8 +63,6 @@ int	check_second_player()
 void	set_player(t_filler *status)
 {
 	char *line;
-	FILE *fp;
-
 
 	line = 0;
 	if(!get_next_filler(STDIN_FILENO, &line))

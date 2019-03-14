@@ -54,6 +54,8 @@ typedef	struct	s_moves
 */
 
 void			read_map_size(t_filler *status);
+void			find_origin(t_filler *status);
+void			set_stage(t_filler *status);
 
 /*
 **	main.c
@@ -80,7 +82,7 @@ void			print2darray(char **map);
 void			print2dintarray(int **map, int r, int c);
 
 /*
-**	Uncategorized
+**	logic.c
 */
 void			AssignCorner(t_filler *status);
 void			AssignCorner2(t_filler *status);
