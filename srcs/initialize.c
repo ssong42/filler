@@ -63,11 +63,13 @@ int	check_second_player()
 void	set_player(t_filler *status)
 {
 	char *line;
+	FILE *fp;
+
 
 	line = 0;
 	if(!get_next_filler(STDIN_FILENO, &line))
 		exit(0);
-	if (!ft_strcmp(line + 11, "1"))
+	if (line[10] == '1')
 	{
 		status->me = 'O';
 		status->enemy = 'X';

@@ -68,7 +68,7 @@ int				in_game(t_filler *status);
 **	heatmap.c
 */
 
-void			find_centerofgravity(t_filler *status);
+void			find_centerofGravity(t_filler *status);
 void			assign_heatvalue(int y1, int x1, t_filler *status);
 void			generate_heatmap(t_filler *status);
 
@@ -82,5 +82,6 @@ void			print2dintarray(int **map, int r, int c);
 /*
 **	Uncategorized
 */
-void			assigncorner2(t_filler *status);
+void			AssignCorner(t_filler *status);
+void			AssignCorner2(t_filler *status);
 #endif
